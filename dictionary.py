@@ -8,10 +8,22 @@ data = json.load(open("data.json"))
 def defineword(w):
     w = w.lower()
     c = w.capitalize()
-    if w in data:
+    acronym = w.upper()
+    if w and acronym in data:
+        choise = input(
+            f"Did you mean '{w}' or '{acronym}' Type '1' or '2': ").format()
+        if choise == "1":
+            return data[w]
+        elif choise == "2":
+            return data[acronym]
+        else:
+            return "We cant process that entry. Please try again."
+    elif w in data:
         return data[w]
     elif c in data:
         return data[c]
+    elif acronym in data:
+        return data[acronym]
     elif len(get_close_matches(w, data.keys())) > 0:
         yn = input("Did you mean %s? Enter Y or N: " %
                    get_close_matches(w, data.keys(), cutoff=0)[0])
