@@ -6,8 +6,12 @@ data = json.load(open("data.json"))
 
 
 def defineword(w):
+    w = w.lower()
+    c = w.capitalize()
     if w in data:
         return data[w]
+    elif c in data:
+        return data[c]
     elif len(get_close_matches(w, data.keys())) > 0:
         yn = input("Did you mean %s? Enter Y or N: " %
                    get_close_matches(w, data.keys(), cutoff=0)[0])
@@ -23,4 +27,10 @@ def defineword(w):
 
 word = input("Type a singel english word to get the definition: ")
 
-print(defineword(word.lower()))
+output = defineword(word)
+
+if type(output) == list:
+    for item in output:
+        print(item)
+else:
+    print(output)
